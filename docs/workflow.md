@@ -1,6 +1,6 @@
 # 调研任务执行流程
 
-本文档描述在这个 Workspace 里从零开始一次调研任务的推荐步骤。写作规范（模板用法、class 约定）见 [page-authoring.md](./page-authoring.md)；引用工具原理见 [citation-guide.md](./citation-guide.md)；3D 可视化用法见 [visualization-guide.md](./visualization-guide.md)。
+本文档描述在这个 Workspace 里从零开始一次调研任务的推荐步骤。写作规范（模板用法、class 约定）见 [page-authoring.md](./page-authoring.md)；引用工具原理见 [citation-guide.md](./citation-guide.md)；3D 可视化用法见 [visualization-guide.md](./visualization-guide.md)；本地原文管理见 [paper-archive.md](./paper-archive.md)。
 
 ## 0. 准备环境
 
@@ -32,7 +32,11 @@ npm run dev
 1. 在 `bib/references.bib` 里追加一条标准 BibTeX 条目，key 用 "作者姓+年份+关键词"的形式（如 `he2016resnet`），全小写、无空格；
 2. 复制 `templates/detail.template.html` 到 `pages/details/<key>.html`——**文件名必须与 bib key 完全一致**，这是引用工具判断"点击后跳转到哪个页面"的唯一依据；
 3. 按模板提示填充方法/实验/优缺点/相关工作等内容；
-4. 回到总结页面的"工作总览"部分，用 `<cite class="ref" data-key="key">标题</cite>` 加一张卡片链接过去。
+4. 回到总结页面的"工作总览"部分，用 `<cite class="ref" data-key="key">标题</cite>` 加一张卡片链接过去；
+5.（可选）如果这篇工作的原文能下载到本地，把文件放进 `papers/` 目录，再运行
+   `npm run papers:add -- <key> --url=<原文链接>` 登记获取方式——详情页面的
+   "查看原文"按钮会自动识别到本地文件。这是可选步骤，工作以 online report
+   形式发布、或原文无法获取时可以跳过，详见 [paper-archive.md](./paper-archive.md)。
 
 不需要手动重新生成任何索引文件——`bib/references.bib` 与 `pages/details/` 的变化会被 Vite 插件实时感知并反映到页面上。
 

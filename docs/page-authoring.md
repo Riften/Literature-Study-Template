@@ -31,7 +31,8 @@
 - `.card-grid` / `.card` / `.card-link`：卡片列表（工作总览、任务列表等）；
 - `.figure`（内含 `<img>` + `<figcaption>`）：图片；
 - `.viz3d-container` / `.viz3d-hint` / `.viz3d-caption`：3D 可视化容器，详见 [visualization-guide.md](./visualization-guide.md)；
-- `<cite class="ref" data-key="bib_key">...</cite>`：文献引用，详见 [citation-guide.md](./citation-guide.md)。
+- `<cite class="ref" data-key="bib_key">...</cite>`：文献引用，详见 [citation-guide.md](./citation-guide.md)；
+- `.paper-source[data-paper-key="bib_key"]`：详情页"查看原文"占位元素，页面加载时自动渲染，详见 [paper-archive.md](./paper-archive.md)。
 
 新增样式需求时，优先考虑往 `src/styles/main.css` 里加通用 class，而不是在页面里写 `<style>` 内联样式。
 

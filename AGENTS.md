@@ -36,6 +36,10 @@ npm run dev      # 本地开发服务器，改文件即时热更新
 
 原理与用法见 [docs/citation-guide.md](./docs/citation-guide.md)。
 
+## 本地原文管理（可选）
+
+调研过程中下载到的论文原文（PDF 等）可以存到 `papers/` 目录并在详情页提供"查看原文"入口；原文本身不进版本库，只在 `papers/manifest.json` 里登记获取方式，方便在新环境重新下载。这是**可选功能**——工作以 online report 形式发布、或原文确实无法获取时，不登记即可，不影响任何检查。论文下载由 `npm run papers:*` 命令行工具完成，不是页面本身的功能。完整说明见 [docs/paper-archive.md](./docs/paper-archive.md)。
+
 ## 数学公式
 
 直接写 LaTeX：行内 `$...$`，独立成段 `$$...$$`，会被自动渲染，无需任何额外配置。

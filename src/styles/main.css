@@ -347,6 +347,60 @@ th {
   font-size: 0.72rem;
 }
 
+/* "查看原文"按钮（详情页本地论文副本，见 docs/paper-archive.md） */
+.paper-source {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.4rem;
+}
+.btn-view-paper {
+  display: inline-block;
+  border: 1px solid var(--color-accent);
+  border-radius: 999px;
+  padding: 0.25rem 0.9rem;
+  font: inherit;
+  font-size: 0.85rem;
+  color: var(--color-accent);
+  background: var(--color-accent-soft);
+  cursor: pointer;
+  appearance: none;
+}
+.btn-view-paper:hover {
+  text-decoration: none;
+  filter: brightness(1.05);
+}
+.btn-view-paper--missing {
+  border-color: var(--color-warn);
+  color: var(--color-warn);
+  background: var(--color-warn-bg);
+}
+.paper-source-empty {
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+}
+.paper-source-hint {
+  width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 0.6rem 0.9rem;
+  background: var(--color-bg-alt);
+  font-size: 0.85rem;
+}
+.paper-source-hint p {
+  margin: 0.3rem 0;
+}
+.paper-source-hint pre {
+  margin: 0.3rem 0;
+  padding: 0.5rem 0.7rem;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-size: 0.78rem;
+}
+.paper-source-hint-tip {
+  color: var(--color-text-muted);
+}
+
 /* 返回顶部按钮 */
 .back-to-top {
   position: fixed;

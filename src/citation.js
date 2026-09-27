@@ -9,6 +9,7 @@
 // bib/references.bib 生成，dev 模式下改动 bib 文件会自动触发刷新。
 
 import bibIndex from 'virtual:bib-index';
+import { escapeHtml } from './escape-html.js';
 
 let tooltipEl = null;
 
@@ -77,12 +78,4 @@ function hideTooltip() {
     tooltipEl.remove();
     tooltipEl = null;
   }
-}
-
-function escapeHtml(str) {
-  return String(str)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
 }

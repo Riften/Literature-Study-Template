@@ -46,6 +46,15 @@
     <dt>原文链接</dt><dd><!-- AGENT: 论文/项目主页链接 --><a href="{{PAPER_URL}}">{{PAPER_URL}}</a></dd>
     <dt>代码仓库</dt><dd><!-- AGENT: 若无可写"未开源" -->{{CODE_URL}}</dd>
     <dt>BibTeX Key</dt><dd><code>{{BIB_KEY}}</code></dd>
+    <!--
+      AGENT 说明：下面这行不需要手动填内容，页面加载时会自动根据
+      papers/manifest.json + papers/ 目录下是否有对应文件渲染成
+      "查看原文"链接 / "本地暂无原文"提示 / 空白提示三种状态之一。
+      如果这篇工作下载到了本地原文，用 `npm run papers:add -- {{BIB_KEY}} --url=...`
+      登记获取方式（不会自动下载）；如果原文是 online report 或确实无法
+      获取，这里可以完全不管，属于正常情况。详见 docs/paper-archive.md。
+    -->
+    <dt>原文副本</dt><dd><div class="paper-source" data-paper-key="{{BIB_KEY}}"></div></dd>
   </dl>
 
   <div class="toc">

@@ -7,13 +7,15 @@
 ```
 index.html              首页，调研任务列表入口
 bib/references.bib      唯一的 BibTeX 文献信息源
+papers/                 本地论文原文副本（不进版本库，仅 manifest.json 记录获取方式）
 pages/summaries/        调研总结页面
 pages/details/          文献详情页面（文件名 == bib key）
 pages/topics/           专题分析页面
 templates/              三类页面的 html 模板
 src/                    共享前端代码（样式、KaTeX/引用/导航初始化、3D 工具）
-plugins/                Vite 插件（bib 索引虚拟模块）
-scripts/lib/            bib 解析、html 枚举等被插件与测试共用的纯函数
+plugins/                Vite 插件（bib 索引 / 本地原文索引虚拟模块）
+scripts/lib/            bib 解析、html 枚举、本地原文 manifest 等被插件与测试共用的纯函数
+scripts/papers-cli.mjs  本地原文维护命令行工具（npm run papers:*）
 tests/                  构建/链接完整性检查（vitest）
 public/img/             静态图片资源
 docs/                   给 code agent 的详细写作/工具说明
@@ -31,6 +33,7 @@ npm run dev        # 本地开发服务器，改 html/css/js/bib 即时热更新
 npm run build       # 构建生产静态站点到 dist/
 npm run preview     # 本地预览 dist/ 构建产物
 npm test           # 引用完整性 / 内部链接完整性检查（vitest）
+npm run papers:list  # 查看每篇工作的本地原文（papers/ 目录）登记与下载状态
 ```
 
 `npm run dev` 默认监听 http://localhost:5173 。保存任意页面文件或 `bib/references.bib` 后浏览器会自动刷新，不需要手动重新生成任何索引文件——引用索引由 `plugins/bib-index-plugin.js` 在 dev/build 时自动生成。
@@ -57,6 +60,10 @@ npx gh-pages -d dist   # 部署到 GitHub Pages（需要先 npm i -D gh-pages）
 - 存在于 bib 但暂时还没有详情页面的条目只会打印提示，不算测试失败（这是调研过程中的正常中间状态）。
 
 建议在写完一批新页面后运行一次。
+
+## 本地原文管理（可选）
+
+调研过程中下载到的论文原文（PDF 等）可以放在 `papers/` 目录，配合详情页面的"查看原文"按钮使用；原文文件本身不进版本库，只有 `papers/manifest.json` 记录的"获取方式"元信息会被提交，方便在新环境重新下载。这不是硬性要求——工作以 online report 形式发布、或原文确实无法获取时可以不登记。详见 [docs/paper-archive.md](./docs/paper-archive.md)。
 
 ## 开始一次新的调研任务
 

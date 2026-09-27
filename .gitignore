@@ -4,6 +4,13 @@ dist/
 .vite/
 *.local
 
+# 本地论文原文副本：只维护"如何重新获取"的元信息（papers/manifest.json），
+# 实际的 PDF/网页快照等原文文件不进版本库（体积大、可能有版权限制）。
+# 见 docs/paper-archive.md。
+/papers/*
+!/papers/manifest.json
+!/papers/README.md
+
 # 测试/覆盖率
 coverage/
 

@@ -1,0 +1,8 @@
+{
+  "vaswani2017attention": {
+    "filename": "vaswani2017attention.pdf",
+    "url": "https://arxiv.org/pdf/1706.03762.pdf",
+    "method": "curl -L -o papers/vaswani2017attention.pdf https://arxiv.org/pdf/1706.03762.pdf",
+    "note": "示例登记：arXiv 上的公开 PDF。本模板未在本地实际下载此文件，用来演示\"已登记获取方式但本地暂无文件\"时详情页的提示效果。"
+  }
+}

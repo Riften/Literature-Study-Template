@@ -13,6 +13,7 @@ import { fileURLToPath } from 'node:url';
 import { describe, it, expect } from 'vitest';
 import { parseBib } from '../scripts/lib/bib-parser.js';
 import { listContentHtmlFiles } from '../scripts/lib/glob-html.js';
+import { loadManifest, manifestPath, buildPapersStatus } from '../scripts/lib/papers-manifest.js';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const bibPath = join(root, 'bib', 'references.bib');
@@ -129,4 +130,39 @@ describe('内部链接完整性', () => {
       expect(broken, `失效链接: ${broken.join(', ')}`).toEqual([]);
     });
   }
+});
+
+describe('本地原文 manifest 完整性（papers/manifest.json，见 docs/paper-archive.md）', () => {
+  // 只做"元信息本身没写错"的最小校验，不要求本地一定有原文文件——
+  // 是否维护本地原文完全是可选的（online report / 无法获取的工作可以不登记）。
+  const entries = loadBibEntries();
+  const bibKeys = new Set(entries.map((e) => e.key));
+
+  it('papers/manifest.json 是合法 JSON，且顶层是对象', () => {
+    expect(() => loadManifest(root)).not.toThrow();
+  });
+
+  const manifest = existsSync(manifestPath(root)) ? loadManifest(root) : {};
+
+  for (const key of Object.keys(manifest)) {
+    it(`papers/manifest.json 中的 key "${key}" 存在于 bib/references.bib`, () => {
+      expect(bibKeys.has(key)).toBe(true);
+    });
+
+    it(`papers/manifest.json 中 "${key}" 的登记信息包含 filename 字段`, () => {
+      expect(Boolean(manifest[key].filename)).toBe(true);
+    });
+  }
+
+  it('（提示）本地原文副本状态一览', () => {
+    const status = buildPapersStatus(root);
+    for (const key of Object.keys(status)) {
+      const s = status[key];
+      // eslint-disable-next-line no-console
+      console.log(
+        `[提示] ${key}: ${s.fileExists ? `本地已有 papers/${s.filename}` : `已登记但本地缺文件（papers/${s.filename}）`}`
+      );
+    }
+    expect(true).toBe(true);
+  });
 });

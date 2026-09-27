@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import bibIndexPlugin from './plugins/bib-index-plugin.js';
+import papersIndexPlugin from './plugins/papers-index-plugin.js';
 import { buildRollupInput } from './scripts/lib/glob-html.js';
 
 // 多页应用入口：根目录 index.html + pages/**/*.html，自动枚举，
@@ -11,7 +12,7 @@ export default defineConfig({
   // 一律使用相对路径，因此默认不需要设置 base。若部署到固定子路径且
   // public/ 下的资源用了根路径引用，可在此显式设置 base（详见 README）。
   base: './',
-  plugins: [bibIndexPlugin()],
+  plugins: [bibIndexPlugin(), papersIndexPlugin()],
   build: {
     rollupOptions: {
       input,

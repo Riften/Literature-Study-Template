@@ -11,7 +11,11 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "vitest run"
+    "test": "vitest run",
+    "papers:list": "node scripts/papers-cli.mjs list",
+    "papers:add": "node scripts/papers-cli.mjs add",
+    "papers:remove": "node scripts/papers-cli.mjs remove",
+    "papers:fetch": "node scripts/papers-cli.mjs fetch"
   },
   "dependencies": {
     "katex": "^0.16.9",
