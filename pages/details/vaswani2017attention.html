@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Attention Is All You Need · 工作详情</title>
+<meta name="description" content="提出完全基于自注意力机制的 Transformer 架构。" />
+</head>
+<body>
+<header class="site-header">
+  <nav class="site-nav">
+    <a class="site-title" href="../../index.html">文献调研 Workspace</a>
+    <a href="../../index.html">全部调研任务</a>
+  </nav>
+</header>
+
+<main class="content">
+  <div class="breadcrumb">
+    <a href="../../index.html">首页</a><span class="sep">/</span>工作详情<span class="sep">/</span>Attention Is All You Need
+  </div>
+
+  <div class="page-header">
+    <h1>Attention Is All You Need</h1>
+    <p class="subtitle">Vaswani, Shazeer, Parmar 等 · NeurIPS · 2017</p>
+    <div class="tags">
+      <span class="tag">Transformer</span>
+      <span class="tag">自注意力</span>
+      <span class="tag">序列建模</span>
+    </div>
+  </div>
+
+  <dl class="meta-grid">
+    <dt>作者</dt><dd>Ashish Vaswani, Noam Shazeer, Niki Parmar 等</dd>
+    <dt>发表venue</dt><dd>NeurIPS</dd>
+    <dt>年份</dt><dd>2017</dd>
+    <dt>原文链接</dt><dd><a href="https://arxiv.org/abs/1706.03762">https://arxiv.org/abs/1706.03762</a></dd>
+    <dt>代码仓库</dt><dd>官方未直接开源，但架构已被 TensorFlow/PyTorch 官方库广泛实现</dd>
+    <dt>BibTeX Key</dt><dd><code>vaswani2017attention</code></dd>
+  </dl>
+
+  <div class="toc">
+    <div class="toc-title">目录</div>
+    <ol>
+      <li><a href="#motivation">问题与动机</a></li>
+      <li><a href="#method">方法</a></li>
+      <li><a href="#experiments">实验与结果</a></li>
+      <li><a href="#strengths-limitations">优点与局限</a></li>
+      <li><a href="#related-work">与相关工作的关系</a></li>
+      <li><a href="#notes">调研笔记 / 评注</a></li>
+    </ol>
+  </div>
+
+  <section id="motivation">
+    <h2>问题与动机</h2>
+    <p>
+      在此之前，序列到序列建模主要依赖 RNN/LSTM（按时间步递归，难以并行）或加了注意力
+      机制的 RNN。递归结构使得训练难以并行化，且随着序列变长，梯度传播路径变长，长程
+      依赖建模效果变差。本文提出完全抛弃循环结构，只用（自）注意力机制来建模序列内部
+      任意两个位置之间的依赖关系。
+    </p>
+  </section>
+
+  <section id="method">
+    <h2>方法</h2>
+    <p>
+      核心是 Scaled Dot-Product Attention：给定查询矩阵 $Q$、键矩阵 $K$、值矩阵 $V$，
+      注意力输出为
+    </p>
+    <p>
+      $$
+      \mathrm{Attention}(Q, K, V) = \mathrm{softmax}\!\left(\frac{QK^\top}{\sqrt{d_k}}\right) V
+      $$
+    </p>
+    <p>
+      其中 $d_k$ 是键向量维度，除以 $\sqrt{d_k}$ 是为了防止点积数值过大导致 softmax
+      梯度消失。模型进一步使用多头注意力（Multi-Head Attention），把 $Q,K,V$ 投影到
+      $h$ 组不同的子空间分别计算注意力再拼接，使模型可以同时关注不同位置、不同"角度"
+      的信息：
+    </p>
+    <p>
+      $$
+      \mathrm{MultiHead}(Q,K,V) = \mathrm{Concat}(\mathrm{head}_1, \dots, \mathrm{head}_h) W^O
+      $$
+    </p>
+    <p>
+      整体是标准的 Encoder-Decoder 结构，每层由多头自注意力 + 前馈网络组成，配合残差连接
+      与 LayerNorm；由于自注意力本身不含位置信息，还需要额外加入位置编码（positional
+      encoding）。关于自注意力权重矩阵 $QK^\top/\sqrt{d_k}$ 的几何直觉，可参见专题页面
+      <a href="../topics/example-attention-3d.html">《自注意力权重的几何直觉》</a>。
+    </p>
+  </section>
+
+  <section id="experiments">
+    <h2>实验与结果</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>数据集</th><th>指标</th><th>本文方法</th><th>基线</th></tr></thead>
+        <tbody>
+          <tr><td>WMT 2014 En-De</td><td>BLEU</td><td>28.4</td><td>此前最优的 RNN/Conv 模型约 25–26</td></tr>
+          <tr><td>WMT 2014 En-Fr</td><td>BLEU</td><td>41.8</td><td>此前最优约 40 左右</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="strengths-limitations">
+    <h2>优点与局限</h2>
+    <div class="callout" data-tone="good">
+      <span class="callout-title">优点</span>
+      完全并行的训练方式大幅缩短训练时间；任意两个位置之间的依赖路径长度为 $O(1)$，
+      长程依赖建模能力显著优于 RNN；架构简洁、可扩展性极强，成为此后几乎所有大模型的基础组件。
+    </div>
+    <div class="callout" data-tone="warn">
+      <span class="callout-title">局限</span>
+      自注意力的计算与显存开销随序列长度 $n$ 呈 $O(n^2)$ 增长，长文本/长序列场景代价高昂；
+      位置编码方式（原文用的是正余弦固定编码）后续被证明并非唯一或最优选择。
+    </div>
+  </section>
+
+  <section id="related-work">
+    <h2>与相关工作的关系</h2>
+    <p>
+      <cite class="ref" data-key="devlin2019bert">BERT</cite> 直接复用了本文提出的
+      Transformer Encoder 作为骨干网络，把训练目标从"有监督翻译"换成了"无监督掩码语言
+      建模"，是本文架构创新之后最重要的训练范式创新之一。
+    </p>
+  </section>
+
+  <section id="notes">
+    <h2>调研笔记 / 评注</h2>
+    <p>
+      本文是这条技术路线上绕不开的起点；建议在任何涉及 Transformer 结构细节的调研任务中，
+      都以本页面作为最基础的详情页参考。
+    </p>
+  </section>
+</main>
+
+<footer class="site-footer">
+  本页面由调研 Workspace 模板生成 · BibTeX 原文见
+  <a href="../../bib/references.bib">bib/references.bib</a>（key: vaswani2017attention）
+</footer>
+
+<script type="module" src="../../src/site.js"></script>
+</body>
+</html>

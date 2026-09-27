@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>BERT · 工作详情</title>
+<meta name="description" content="基于 Transformer Encoder 的双向掩码语言建模预训练范式。" />
+</head>
+<body>
+<header class="site-header">
+  <nav class="site-nav">
+    <a class="site-title" href="../../index.html">文献调研 Workspace</a>
+    <a href="../../index.html">全部调研任务</a>
+  </nav>
+</header>
+
+<main class="content">
+  <div class="breadcrumb">
+    <a href="../../index.html">首页</a><span class="sep">/</span>工作详情<span class="sep">/</span>BERT
+  </div>
+
+  <div class="page-header">
+    <h1>BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding</h1>
+    <p class="subtitle">Devlin, Chang, Lee, Toutanova · NAACL-HLT · 2019</p>
+    <div class="tags">
+      <span class="tag">预训练语言模型</span>
+      <span class="tag">掩码语言建模</span>
+    </div>
+  </div>
+
+  <dl class="meta-grid">
+    <dt>作者</dt><dd>Jacob Devlin, Ming-Wei Chang, Kenton Lee, Kristina Toutanova</dd>
+    <dt>发表venue</dt><dd>NAACL-HLT</dd>
+    <dt>年份</dt><dd>2019</dd>
+    <dt>原文链接</dt><dd><a href="https://arxiv.org/abs/1810.04805">https://arxiv.org/abs/1810.04805</a></dd>
+    <dt>代码仓库</dt><dd>官方开源（TensorFlow），社区提供大量 PyTorch 复现</dd>
+    <dt>BibTeX Key</dt><dd><code>devlin2019bert</code></dd>
+  </dl>
+
+  <div class="toc">
+    <div class="toc-title">目录</div>
+    <ol>
+      <li><a href="#motivation">问题与动机</a></li>
+      <li><a href="#method">方法</a></li>
+      <li><a href="#experiments">实验与结果</a></li>
+      <li><a href="#strengths-limitations">优点与局限</a></li>
+      <li><a href="#related-work">与相关工作的关系</a></li>
+      <li><a href="#notes">调研笔记 / 评注</a></li>
+    </ol>
+  </div>
+
+  <section id="motivation">
+    <h2>问题与动机</h2>
+    <p>
+      在 BERT 之前，主流的语言模型预训练是单向的（从左到右，如 GPT），或者把两个单向
+      模型的表示简单拼接（如 ELMo），限制了模型利用双向上下文的能力。本文希望让每个
+      token 的表示都能同时利用左右两侧的上下文信息。
+    </p>
+  </section>
+
+  <section id="method">
+    <h2>方法</h2>
+    <p>
+      BERT 直接采用 <cite class="ref" data-key="vaswani2017attention">Transformer</cite>
+      的 Encoder 堆叠作为骨干网络，用两个自监督任务进行预训练：
+    </p>
+    <ul>
+      <li>
+        <strong>掩码语言建模（Masked Language Model, MLM）</strong>：随机遮盖输入序列中
+        约 15% 的 token，训练模型根据双向上下文预测被遮盖的 token，目标是最大化
+        $$ \sum_{i \in M} \log P(x_i \mid x_{\setminus M}; \theta) $$
+        其中 $M$ 是被遮盖位置的集合，$x_{\setminus M}$ 表示遮盖后的输入序列。
+      </li>
+      <li>
+        <strong>下一句预测（Next Sentence Prediction, NSP）</strong>：判断两个句子在原文中
+        是否相邻，用于学习句子级别的表示。
+      </li>
+    </ul>
+    <p>预训练完成后，针对具体下游任务只需在 BERT 顶层加一个轻量的输出层，再用少量标注数据微调即可。</p>
+  </section>
+
+  <section id="experiments">
+    <h2>实验与结果</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>数据集</th><th>指标</th><th>本文方法（BERT-Large）</th><th>基线</th></tr></thead>
+        <tbody>
+          <tr><td>GLUE（平均分）</td><td>Accuracy</td><td>82.1</td><td>此前最优系统约 75 左右</td></tr>
+          <tr><td>SQuAD v1.1</td><td>F1</td><td>93.2</td><td>此前最优系统约 91</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="strengths-limitations">
+    <h2>优点与局限</h2>
+    <div class="callout" data-tone="good">
+      <span class="callout-title">优点</span>
+      证明了"大规模无监督预训练 + 少量数据微调"范式在 NLP 上可以大幅超越此前各类
+      任务专用架构；双向上下文建模显著提升了理解类任务的效果；预训练+微调的范式
+      此后成为 NLP（乃至更广泛的深度学习）的标准工作流程。
+    </div>
+    <div class="callout" data-tone="warn">
+      <span class="callout-title">局限</span>
+      非自回归结构，不能直接用于文本生成任务；预训练/微调阶段输入形式不一致
+      （训练时有 [MASK]，推理/微调时没有）带来一定的分布偏移；后续工作（如
+      RoBERTa）指出 NSP 任务的收益有限。
+    </div>
+  </section>
+
+  <section id="related-work">
+    <h2>与相关工作的关系</h2>
+    <p>
+      BERT 的骨干网络直接来自 <cite class="ref" data-key="vaswani2017attention">Attention Is
+      All You Need</cite> 提出的 Transformer Encoder；二者的关系是"架构创新"与"训练范式
+      创新"的叠加：前者解决了"如何高效建模序列依赖"，后者解决了"如何利用海量无标注数据"。
+    </p>
+  </section>
+
+  <section id="notes">
+    <h2>调研笔记 / 评注</h2>
+    <p>
+      如果调研任务关注"预训练范式的演进"，本文是绕不开的第一个双向预训练里程碑；
+      如果调研任务关注"高效注意力/长序列建模"，则应更多关注
+      <cite class="ref" data-key="vaswani2017attention">Transformer</cite> 本身及其后续
+      改进工作。
+    </p>
+  </section>
+</main>
+
+<footer class="site-footer">
+  本页面由调研 Workspace 模板生成 · BibTeX 原文见
+  <a href="../../bib/references.bib">bib/references.bib</a>（key: devlin2019bert）
+</footer>
+
+<script type="module" src="../../src/site.js"></script>
+</body>
+</html>

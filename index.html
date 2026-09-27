@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>文献调研 Workspace</title>
+<meta name="description" content="用于科研文献调研的 code agent 工作空间：总结页面 / 工作详情页面 / 专题页面统一入口。" />
+</head>
+<body>
+<header class="site-header">
+  <nav class="site-nav">
+    <a class="site-title" href="index.html">文献调研 Workspace</a>
+    <a href="AGENTS.md">AGENTS.md</a>
+    <a href="docs/workflow.md">调研流程</a>
+  </nav>
+</header>
+
+<main class="content">
+  <div class="page-header">
+    <h1>文献调研 Workspace</h1>
+    <p class="subtitle">
+      面向 code agent（Claude Code / Codex / DeepSeek 等）的科研文献调研模板项目。
+      每一次调研任务对应下方列表中的一条记录，点开即可查看该任务的总结页面。
+    </p>
+  </div>
+
+  <div class="callout">
+    <span class="callout-title">给 code agent 的提示</span>
+    在开始一次新的调研任务之前，请先阅读根目录的
+    <a href="AGENTS.md">AGENTS.md</a> 与 <code>docs/</code> 下的说明文档，
+    了解页面格式、引用工具、3D 可视化和文件命名约定。
+  </div>
+
+  <section id="tasks">
+    <h2>调研任务列表</h2>
+    <p><!-- AGENT: 每完成/新建一个调研任务，在下面追加一张卡片，链接到对应的总结页面。
+         列表按时间倒序排列（最新的任务放最前面）。 --></p>
+    <div class="card-grid">
+      <div class="card">
+        <h3><a href="pages/summaries/example-attention-survey.html">示例：Attention 与预训练语言模型调研（示例任务，可删除）</a></h3>
+        <p>本模板自带的示例调研任务，演示总结页 / 详情页 / 专题页三种页面、
+          引用悬浮跳转、LaTeX 公式与 3D 可视化的实际用法。正式开始调研时可以
+          删除本条目及其对应页面，也可以保留作为写作参考。</p>
+        <a class="card-link" href="pages/summaries/example-attention-survey.html">查看总结页面 →</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="quick-links">
+    <h2>快速链接</h2>
+    <ul>
+      <li><a href="bib/references.bib">bib/references.bib</a> —— 全部文献的 BibTeX 信息</li>
+      <li><a href="templates/">templates/</a> —— 总结页 / 详情页 / 专题页模板</li>
+      <li><a href="docs/workflow.md">docs/workflow.md</a> —— 调研任务执行流程</li>
+      <li><a href="docs/page-authoring.md">docs/page-authoring.md</a> —— 页面撰写规范</li>
+      <li><a href="docs/citation-guide.md">docs/citation-guide.md</a> —— 引用工具使用说明</li>
+      <li><a href="docs/visualization-guide.md">docs/visualization-guide.md</a> —— 3D 可视化使用说明</li>
+    </ul>
+  </section>
+</main>
+
+<footer class="site-footer">
+  文献调研 Workspace 模板 · 基于 npm + Vite 构建 · 详见 AGENTS.md
+</footer>
+
+<script type="module" src="./src/site.js"></script>
+</body>
+</html>

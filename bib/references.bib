@@ -1,0 +1,36 @@
+% bib/references.bib
+% ---------------------------------------------------------------------------
+% 本文件是整个 Workspace 唯一的文献信息管理入口：所有调研中涉及到的工作，都
+% 应该在这里补充一条标准 BibTeX 条目，而不是在各个 html 页面里各写各的。
+%
+% 约定（务必遵守，否则引用工具无法正确工作）：
+%   1. 每条条目的 key 使用 "作者姓+年份+一个简短关键词" 的形式，例如
+%      vaswani2017attention、he2016resnet，全部小写，不含空格/特殊符号。
+%   2. 该 key 必须与其详情页面文件名一致：pages/details/<key>.html。
+%      即便暂时还没写详情页面，也应先把 bib 条目补充完整（此时引用只会显示
+%      悬浮提示，点击不会跳转，build_bib_index.py 会提示哪些条目还缺详情页）。
+%   3. 每次增删改本文件后，运行一次：
+%          python3 tools/build_bib_index.py
+%      重新生成 assets/data/bib_index.json，页面上的引用悬浮/跳转才会更新。
+%   4. 尽量填写完整字段（title/author/year 至少必填），因为悬浮提示框直接
+%      展示这里的 title/author/year/venue 以及原始 BibTeX 全文。
+%
+% 下面两条是本模板自带的示例条目（对应 examples/example-survey 下的示例详情
+% 页面），实际使用时可以删除，替换成真实调研涉及的文献。
+% ---------------------------------------------------------------------------
+
+@inproceedings{vaswani2017attention,
+  title     = {Attention Is All You Need},
+  author    = {Ashish Vaswani and Noam Shazeer and Niki Parmar and Jakob Uszkoreit and Llion Jones and Aidan N. Gomez and Lukasz Kaiser and Illia Polosukhin},
+  booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
+  year      = {2017},
+  url       = {https://arxiv.org/abs/1706.03762}
+}
+
+@inproceedings{devlin2019bert,
+  title     = {BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding},
+  author    = {Jacob Devlin and Ming-Wei Chang and Kenton Lee and Kristina Toutanova},
+  booktitle = {Proceedings of NAACL-HLT},
+  year      = {2019},
+  url       = {https://arxiv.org/abs/1810.04805}
+}

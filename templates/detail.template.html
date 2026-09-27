@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{{PAPER_TITLE}} · 工作详情</title>
+<meta name="description" content="{{ONE_SENTENCE_SUMMARY}}" />
+</head>
+<body>
+<header class="site-header">
+  <nav class="site-nav">
+    <a class="site-title" href="../../index.html">文献调研 Workspace</a>
+    <a href="../../index.html">全部调研任务</a>
+  </nav>
+</header>
+
+<main class="content">
+  <div class="breadcrumb">
+    <a href="../../index.html">首页</a><span class="sep">/</span>工作详情<span class="sep">/</span>{{PAPER_TITLE}}
+  </div>
+
+  <div class="page-header">
+    <h1>{{PAPER_TITLE}}</h1>
+    <!-- AGENT: 作者与发表信息，一般写成 "作者A, 作者B 等 · 会议/期刊 年份" -->
+    <p class="subtitle">{{AUTHORS}} · {{VENUE}} {{YEAR}}</p>
+    <div class="tags">
+      <!-- AGENT: 关键词标签，按需增删 -->
+      <span class="tag">{{TAG_1}}</span>
+    </div>
+  </div>
+
+  <!--
+    AGENT 说明：
+    这个文件名（不含 .html）必须与 bib/references.bib 中该文献的 BibTeX key
+    完全一致，例如条目是 @article{vaswani2017attention, ...} 就应存为
+    pages/details/vaswani2017attention.html —— 引用工具靠这个约定来判断
+    "点击引用后跳转到哪个页面"。写完本页面后无需手动运行任何脚本：
+    dev 模式下保存即自动刷新，build 时会自动重新生成引用索引
+    （见 plugins/bib-index-plugin.js）。
+  -->
+
+  <dl class="meta-grid">
+    <dt>作者</dt><dd>{{AUTHORS}}</dd>
+    <dt>发表venue</dt><dd>{{VENUE}}</dd>
+    <dt>年份</dt><dd>{{YEAR}}</dd>
+    <dt>原文链接</dt><dd><!-- AGENT: 论文/项目主页链接 --><a href="{{PAPER_URL}}">{{PAPER_URL}}</a></dd>
+    <dt>代码仓库</dt><dd><!-- AGENT: 若无可写"未开源" -->{{CODE_URL}}</dd>
+    <dt>BibTeX Key</dt><dd><code>{{BIB_KEY}}</code></dd>
+  </dl>
+
+  <div class="toc">
+    <div class="toc-title">目录</div>
+    <ol>
+      <li><a href="#motivation">问题与动机</a></li>
+      <li><a href="#method">方法</a></li>
+      <li><a href="#experiments">实验与结果</a></li>
+      <li><a href="#strengths-limitations">优点与局限</a></li>
+      <li><a href="#related-work">与相关工作的关系</a></li>
+      <li><a href="#notes">调研笔记 / 评注</a></li>
+    </ol>
+  </div>
+
+  <!--
+    AGENT 说明：正文内容直接写在下面各 section 中，可自由使用标题/段落/列表/
+    表格/公式/图片/3D 可视化（参见 docs/visualization-guide.md）。
+    引用其他工作用 <cite class="ref" data-key="其他bib_key">...</cite>。
+  -->
+
+  <section id="motivation">
+    <h2>问题与动机</h2>
+    <p><!-- AGENT: 这篇工作要解决什么问题？此前方法的不足是什么？ --></p>
+  </section>
+
+  <section id="method">
+    <h2>方法</h2>
+    <p><!-- AGENT: 详细介绍方法原理，公式用 LaTeX，例如： -->
+      模型输出为 $$ y = f(x; \theta) $$ 其中 $\theta$ 为可学习参数。
+    </p>
+    <div class="figure">
+      <!-- AGENT: 如有架构图/流程图，放在 public/img/ 下并在此引用（部署时
+           public/ 下的文件会被原样拷贝到产物根目录）；也可以用内联 SVG
+           直接手绘示意图 -->
+      <!-- <img src="../../public/img/xxx.png" alt="方法架构图" /> -->
+      <!-- <figcaption>图 1：方法整体架构</figcaption> -->
+    </div>
+  </section>
+
+  <section id="experiments">
+    <h2>实验与结果</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>数据集</th><th>指标</th><th>本文方法</th><th>基线</th></tr></thead>
+        <tbody><tr><td></td><td></td><td></td><td></td></tr></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="strengths-limitations">
+    <h2>优点与局限</h2>
+    <div class="callout" data-tone="good">
+      <span class="callout-title">优点</span>
+      <!-- AGENT: 该工作的主要贡献/优势 -->
+    </div>
+    <div class="callout" data-tone="warn">
+      <span class="callout-title">局限</span>
+      <!-- AGENT: 该工作的局限性、未解决的问题 -->
+    </div>
+  </section>
+
+  <section id="related-work">
+    <h2>与相关工作的关系</h2>
+    <p><!-- AGENT: 与本次调研中其他工作的联系/对比，用 <cite class="ref" data-key="...">
+         引用它们，例如本文方法可视为对 <cite class="ref" data-key="其他key">某工作</cite>
+         的改进。 --></p>
+  </section>
+
+  <section id="notes">
+    <h2>调研笔记 / 评注</h2>
+    <p><!-- AGENT: 调研者（agent）自己的分析、疑问、与任务目标的关联度评估等 --></p>
+  </section>
+</main>
+
+<footer class="site-footer">
+  本页面由调研 Workspace 模板生成 · BibTeX 原文见
+  <a href="../../bib/references.bib">bib/references.bib</a>（key: {{BIB_KEY}}）
+</footer>
+
+<script type="module" src="../../src/site.js"></script>
+</body>
+</html>

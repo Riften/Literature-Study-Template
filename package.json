@@ -1,0 +1,24 @@
+{
+  "name": "literature-study-workspace",
+  "version": "0.1.0",
+  "private": true,
+  "description": "面向 code agent 的科研文献调研 Workspace 模板：Vite 多页应用 + KaTeX + three.js + 统一 BibTeX 引用管理。",
+  "type": "module",
+  "engines": {
+    "node": ">=18.19"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "katex": "^0.16.9",
+    "three": "^0.160.1"
+  },
+  "devDependencies": {
+    "vite": "^5.4.11",
+    "vitest": "^2.1.5"
+  }
+}

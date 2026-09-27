@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Attention 机制与预训练语言模型早期工作 · 调研总结</title>
+<meta name="description" content="示例调研任务：以 Transformer 的注意力机制及 BERT 为例，演示本 Workspace 的页面格式、引用与可视化用法。" />
+</head>
+<body>
+<header class="site-header">
+  <nav class="site-nav">
+    <a class="site-title" href="../../index.html">文献调研 Workspace</a>
+    <a href="../../index.html">全部调研任务</a>
+  </nav>
+</header>
+
+<main class="content">
+  <div class="breadcrumb">
+    <a href="../../index.html">首页</a><span class="sep">/</span>调研总结<span class="sep">/</span>Attention 机制与预训练语言模型早期工作
+  </div>
+
+  <div class="page-header">
+    <h1>Attention 机制与预训练语言模型早期工作（示例任务）</h1>
+    <p class="subtitle">
+      本任务是模板自带的示例，用来演示总结页 / 详情页 / 专题页的写作格式、
+      引用悬浮跳转、LaTeX 公式渲染与 3D 可视化的实际效果。真正开始调研新课题时，
+      可以参考本任务的结构，也可以直接删除它。
+    </p>
+    <div class="tags">
+      <span class="tag">Transformer</span>
+      <span class="tag">自注意力机制</span>
+      <span class="tag">预训练语言模型</span>
+    </div>
+  </div>
+
+  <div class="meta-grid">
+    <dt>调研时间</dt><dd>2026-09-27</dd>
+    <dt>调研范围</dt><dd>自注意力机制的提出与其在预训练语言模型中的早期应用（2017–2019）</dd>
+    <dt>涉及工作数</dt><dd>2 篇</dd>
+    <dt>相关专题页面</dt><dd><a href="../topics/example-attention-3d.html">专题：自注意力权重的几何直觉（含 3D 可视化）</a></dd>
+  </div>
+
+  <div class="toc">
+    <div class="toc-title">目录</div>
+    <ol>
+      <li><a href="#background">调研背景与问题定义</a></li>
+      <li><a href="#method">调研方法与检索范围</a></li>
+      <li><a href="#landscape">工作总览</a></li>
+      <li><a href="#findings">关键发现</a></li>
+      <li><a href="#comparison">对比与分析</a></li>
+      <li><a href="#open-questions">尚存的开放问题</a></li>
+      <li><a href="#references">涉及文献</a></li>
+    </ol>
+  </div>
+
+  <section id="background">
+    <h2>调研背景与问题定义</h2>
+    <p>
+      2017 年前后，序列建模的主流方法仍以循环神经网络（RNN/LSTM）与卷积神经网络为主，
+      难以并行训练且长程依赖建模能力有限。本示例调研关注两个问题：
+      (1) 自注意力（self-attention）机制如何替代循环结构完成序列建模；
+      (2) 基于该机制的预训练范式（以 BERT 为代表）如何进一步提升下游任务效果。
+    </p>
+  </section>
+
+  <section id="method">
+    <h2>调研方法与检索范围</h2>
+    <p>
+      本示例仅选取两篇奠基性工作用于演示格式，不代表完整的检索流程。真实调研任务中，
+      请在此说明实际使用的关键词、数据库（如 arXiv / Google Scholar / Semantic Scholar）、
+      时间范围、以及纳入/排除标准。
+    </p>
+  </section>
+
+  <section id="landscape">
+    <h2>工作总览</h2>
+    <p>下表列出的两篇工作分别提出了自注意力架构与基于该架构的双向预训练范式。</p>
+    <div class="card-grid">
+      <div class="card">
+        <h3><cite class="ref" data-key="vaswani2017attention">Attention Is All You Need</cite></h3>
+        <p>提出完全基于自注意力的 Transformer 架构，摆脱了 RNN 的序列依赖，可高度并行训练。</p>
+        <a class="card-link" href="../details/vaswani2017attention.html">查看详情 →</a>
+      </div>
+      <div class="card">
+        <h3><cite class="ref" data-key="devlin2019bert">BERT</cite></h3>
+        <p>基于 Transformer 编码器，用掩码语言建模做双向预训练，刷新了大量下游任务的效果。</p>
+        <a class="card-link" href="../details/devlin2019bert.html">查看详情 →</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="findings">
+    <h2>关键发现</h2>
+    <ul>
+      <li>自注意力机制用 $O(1)$ 步的直接连接替代了 RNN 中 $O(n)$ 步的序列传递，显著缓解了长程依赖问题。</li>
+      <li><cite class="ref" data-key="devlin2019bert">BERT</cite> 证明了"大规模无监督预训练 + 任务微调"范式在 NLP 上同样有效，是此后预训练语言模型路线的直接源头。</li>
+      <li>二者共享同一个核心构件——多头自注意力，说明架构创新（<cite class="ref" data-key="vaswani2017attention">Transformer</cite>）与训练范式创新（<cite class="ref" data-key="devlin2019bert">BERT</cite>）是相对独立、可以叠加的两条演进线索。</li>
+    </ul>
+  </section>
+
+  <section id="comparison">
+    <h2>对比与分析</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>工作</th><th>核心思路</th><th>适用场景</th><th>局限性</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><cite class="ref" data-key="vaswani2017attention">Transformer</cite></td>
+            <td>纯自注意力 Encoder-Decoder，配合位置编码</td>
+            <td>机器翻译等序列到序列任务</td>
+            <td>自注意力计算/显存随序列长度 $n$ 呈 $O(n^2)$ 增长</td>
+          </tr>
+          <tr>
+            <td><cite class="ref" data-key="devlin2019bert">BERT</cite></td>
+            <td>仅用 Encoder + 掩码语言建模做双向预训训练</td>
+            <td>分类/抽取式 QA 等理解类下游任务</td>
+            <td>不是自回归结构，天然不适合做生成任务</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="open-questions">
+    <h2>尚存的开放问题</h2>
+    <ul>
+      <li>自注意力的 $O(n^2)$ 复杂度在长序列场景下的优化（本示例未展开，真实调研可在专题页面中单独分析）。</li>
+      <li>预训练目标（掩码语言建模 vs. 自回归语言建模）对下游任务效果的影响尚需更系统的对比。</li>
+    </ul>
+  </section>
+
+  <section id="references">
+    <h2>涉及文献</h2>
+    <p>本次调研共涉及 2 篇工作，完整 BibTeX 信息见
+      <a href="../../bib/references.bib">bib/references.bib</a>，逐篇详情见
+      <a href="../details/vaswani2017attention.html">Transformer</a> 与
+      <a href="../details/devlin2019bert.html">BERT</a> 的详情页面。</p>
+  </section>
+</main>
+
+<footer class="site-footer">
+  本页面由调研 Workspace 模板生成 · 数学公式由 KaTeX 渲染 · 引用信息见 bib/references.bib
+</footer>
+
+<script type="module" src="../../src/site.js"></script>
+</body>
+</html>

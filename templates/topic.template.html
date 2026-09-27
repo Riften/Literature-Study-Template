@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{{TOPIC_TITLE}} · 专题分析</title>
+<meta name="description" content="{{ONE_SENTENCE_SUMMARY}}" />
+</head>
+<body>
+<header class="site-header">
+  <nav class="site-nav">
+    <a class="site-title" href="../../index.html">文献调研 Workspace</a>
+    <a href="../../index.html">全部调研任务</a>
+  </nav>
+</header>
+
+<main class="content">
+  <div class="breadcrumb">
+    <a href="../../index.html">首页</a><span class="sep">/</span>专题页面<span class="sep">/</span>{{TOPIC_TITLE}}
+  </div>
+
+  <div class="page-header">
+    <h1>{{TOPIC_TITLE}}</h1>
+    <!-- AGENT: 一句话说明本专题页面要讲清楚什么问题（原理讲解/技术路线对比/专题讨论等） -->
+    <p class="subtitle">{{ONE_SENTENCE_SUMMARY}}</p>
+    <div class="tags">
+      <span class="tag">{{TAG_1}}</span>
+    </div>
+  </div>
+
+  <div class="meta-grid">
+    <!-- AGENT: 说明本专题页面从属于哪个调研总结页面，方便双向跳转 -->
+    <dt>所属调研任务</dt><dd><a href="../summaries/{{SUMMARY_FILE}}.html">{{SUMMARY_TITLE}}</a></dd>
+  </div>
+
+  <div class="toc">
+    <div class="toc-title">目录</div>
+    <ol>
+      <li><a href="#intro">引言</a></li>
+      <li><a href="#body">正文</a></li>
+      <li><a href="#conclusion">小结</a></li>
+    </ol>
+  </div>
+
+  <!--
+    AGENT 说明：
+    专题页面比总结页/详情页更自由，用于讲清楚某个技术原理、做多个技术路线的
+    横向分析、或者围绕某个具体问题展开讨论。请自行设计章节结构（保留下面的
+    id 仅作参考，可以整体替换），正文内容仍然直接写在本文件里。
+    可以引用具体工作：<cite class="ref" data-key="某bib_key">...</cite>
+    可以写公式：$$ ... $$
+    也可以嵌入 3D 可视化，见下方示例（默认注释掉，需要时取消注释并按需修改）。
+  -->
+
+  <section id="intro">
+    <h2>引言</h2>
+    <p><!-- AGENT: 为什么需要单独开一个专题页面来讨论这个问题 --></p>
+  </section>
+
+  <section id="body">
+    <h2>正文</h2>
+    <p><!-- AGENT: 主体内容，可自由拆分为多个 h2/h3 小节 --></p>
+
+    <!--
+      3D 可视化示例（three.js，作为 npm 依赖由 Vite 解析，无需 importmap）。
+      要启用本示例：取消下面 <script type="module"> 段的注释，并把
+      initScene() 中的几何体/数据换成实际要展示的内容（例如模型结构示意、
+      embedding 空间散点、注意力权重立体图等）。场景初始化的样板代码已经
+      封装进 src/viz/create-orbit-scene.js，详见 docs/visualization-guide.md。
+    -->
+    <!--
+    <div class="viz3d-container" id="viz3d-example">
+      <span class="viz3d-hint">拖拽旋转 · 滚轮缩放</span>
+    </div>
+    <p class="viz3d-caption">图：示例 3D 可视化，展示 ... （替换为实际说明）</p>
+    -->
+  </section>
+
+  <section id="conclusion">
+    <h2>小结</h2>
+    <p><!-- AGENT: 总结本专题页面的核心结论 --></p>
+  </section>
+</main>
+
+<footer class="site-footer">
+  本页面由调研 Workspace 模板生成 · 数学公式由 KaTeX 渲染 · 3D 可视化由 three.js 渲染
+</footer>
+
+<script type="module" src="../../src/site.js"></script>
+
+<!--
+<script type="module">
+  import * as THREE from "three";
+  import { createOrbitScene } from "../../src/viz/create-orbit-scene.js";
+
+  function initScene() {
+    var container = document.getElementById("viz3d-example");
+    if (!container) return;
+
+    var { scene, start } = createOrbitScene(container, {
+      cameraPosition: [4, 3, 6],
+    });
+
+    // AGENT: 用真实数据替换下面的示例几何体，例如从一个内联 <script type="application/json">
+    // 数据块里读点云坐标，或者按方法结构手动搭建多个 Mesh。
+    var geometry = new THREE.IcosahedronGeometry(1.6, 1);
+    var material = new THREE.MeshStandardMaterial({ color: 0x6fa2ff, flatShading: true });
+    var mesh = new THREE.Mesh(geometry, material);
+    scene.add(mesh);
+
+    start();
+  }
+
+  initScene();
+</script>
+-->
+</body>
+</html>

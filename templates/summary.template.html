@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{{TITLE}} · 调研总结</title>
+<meta name="description" content="{{ONE_SENTENCE_SUMMARY}}" />
+</head>
+<body>
+<header class="site-header">
+  <nav class="site-nav">
+    <a class="site-title" href="../../index.html">文献调研 Workspace</a>
+    <a href="../../index.html">全部调研任务</a>
+  </nav>
+</header>
+
+<main class="content">
+  <div class="breadcrumb">
+    <a href="../../index.html">首页</a><span class="sep">/</span>调研总结<span class="sep">/</span>{{TITLE}}
+  </div>
+
+  <div class="page-header">
+    <h1>{{TITLE}}</h1>
+    <!-- AGENT: 一句话概括本次调研任务的目标与范围 -->
+    <p class="subtitle">{{ONE_SENTENCE_SUMMARY}}</p>
+    <div class="tags">
+      <!-- AGENT: 按需增删标签，用于快速标记本次调研涉及的主题/领域 -->
+      <span class="tag">{{TAG_1}}</span>
+      <span class="tag">{{TAG_2}}</span>
+    </div>
+  </div>
+
+  <div class="meta-grid">
+    <!-- AGENT: 记录本次调研任务的关键元信息，字段可按需增删 -->
+    <dt>调研时间</dt><dd>{{DATE}}</dd>
+    <dt>调研范围</dt><dd>{{SCOPE}}</dd>
+    <dt>涉及工作数</dt><dd>{{NUM_WORKS}} 篇</dd>
+    <dt>相关专题页面</dt><dd><!-- AGENT: 链接到本任务下创建的专题分析页面，如无则写"无" -->{{TOPIC_LINKS}}</dd>
+  </div>
+
+  <div class="toc">
+    <div class="toc-title">目录</div>
+    <ol>
+      <li><a href="#background">调研背景与问题定义</a></li>
+      <li><a href="#method">调研方法与检索范围</a></li>
+      <li><a href="#landscape">工作总览</a></li>
+      <li><a href="#findings">关键发现</a></li>
+      <li><a href="#comparison">对比与分析</a></li>
+      <li><a href="#open-questions">尚存的开放问题</a></li>
+      <li><a href="#references">涉及文献</a></li>
+    </ol>
+  </div>
+
+  <!--
+    AGENT 说明：
+    下面每个 <section> 是一个建议的写作模块，可按调研任务实际情况增删/重命名，
+    但请保留 id，方便目录跳转。正文内容请直接写在这里（可用标题、段落、列表、
+    表格、公式、图片等任意 html），不要把内容抽到别的数据文件里。
+    引用某篇文献时使用：
+      <cite class="ref" data-key="某bib_key">作者, 年份</cite>
+    数学公式直接写 LaTeX，例如 $O(n^2)$ 或独立成段的 $$ ... $$。
+  -->
+
+  <section id="background">
+    <h2>调研背景与问题定义</h2>
+    <p><!-- AGENT: 说明为什么要做这次调研，要回答的核心问题是什么 --></p>
+  </section>
+
+  <section id="method">
+    <h2>调研方法与检索范围</h2>
+    <p><!-- AGENT: 说明检索策略（关键词、数据库、时间范围）、筛选标准、纳入/排除条件 --></p>
+  </section>
+
+  <section id="landscape">
+    <h2>工作总览</h2>
+    <p><!-- AGENT: 用一段话概述本次调研覆盖的工作及其分类脉络 --></p>
+    <div class="card-grid">
+      <!-- AGENT: 每篇被详细调研的工作用一张卡片概括，链接到其详情页面 -->
+      <div class="card">
+        <h3><cite class="ref" data-key="{{BIB_KEY}}">{{PAPER_TITLE}}</cite></h3>
+        <p>{{ONE_LINE_TAKEAWAY}}</p>
+        <a class="card-link" href="../details/{{BIB_KEY}}.html">查看详情 →</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="findings">
+    <h2>关键发现</h2>
+    <ul>
+      <li><!-- AGENT: 按重要性列出本次调研得到的核心发现/结论 --></li>
+    </ul>
+  </section>
+
+  <section id="comparison">
+    <h2>对比与分析</h2>
+    <p><!-- AGENT: 可用表格对比不同工作的方法/指标/适用场景 --></p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>工作</th><th>核心思路</th><th>适用场景</th><th>局限性</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><cite class="ref" data-key="{{BIB_KEY}}">{{PAPER_TITLE}}</cite></td>
+            <td></td><td></td><td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="open-questions">
+    <h2>尚存的开放问题</h2>
+    <ul>
+      <li><!-- AGENT: 列出调研过程中发现的、尚未被很好解决的问题或未来方向 --></li>
+    </ul>
+  </section>
+
+  <section id="references">
+    <h2>涉及文献</h2>
+    <p>本次调研共涉及 {{NUM_WORKS}} 篇工作，完整 BibTeX 信息见
+      <a href="../../bib/references.bib">bib/references.bib</a>，逐篇详情见各
+      <a href="../details/">详情页面</a>。</p>
+  </section>
+</main>
+
+<footer class="site-footer">
+  本页面由调研 Workspace 模板生成 · 数学公式由 KaTeX 渲染 · 引用信息见 bib/references.bib
+</footer>
+
+<script type="module" src="../../src/site.js"></script>
+</body>
+</html>

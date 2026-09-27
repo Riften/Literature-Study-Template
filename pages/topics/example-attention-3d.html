@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>自注意力权重的几何直觉 · 专题分析</title>
+<meta name="description" content="用 3D 柱状图可视化自注意力权重矩阵 softmax(QK^T/sqrt(d_k))，帮助建立直觉。" />
+</head>
+<body>
+<header class="site-header">
+  <nav class="site-nav">
+    <a class="site-title" href="../../index.html">文献调研 Workspace</a>
+    <a href="../../index.html">全部调研任务</a>
+  </nav>
+</header>
+
+<main class="content">
+  <div class="breadcrumb">
+    <a href="../../index.html">首页</a><span class="sep">/</span>专题页面<span class="sep">/</span>自注意力权重的几何直觉
+  </div>
+
+  <div class="page-header">
+    <h1>自注意力权重的几何直觉</h1>
+    <p class="subtitle">
+      结合公式与 3D 可视化，直观展示自注意力权重矩阵
+      $A = \mathrm{softmax}(QK^\top/\sqrt{d_k})$ 的样子。
+    </p>
+    <div class="tags">
+      <span class="tag">自注意力</span>
+      <span class="tag">3D 可视化</span>
+    </div>
+  </div>
+
+  <div class="meta-grid">
+    <dt>所属调研任务</dt>
+    <dd><a href="../summaries/example-attention-survey.html">Attention 机制与预训练语言模型早期工作（示例任务）</a></dd>
+  </div>
+
+  <div class="toc">
+    <div class="toc-title">目录</div>
+    <ol>
+      <li><a href="#intro">引言</a></li>
+      <li><a href="#body">正文：从公式到 3D 权重图</a></li>
+      <li><a href="#conclusion">小结</a></li>
+    </ol>
+  </div>
+
+  <section id="intro">
+    <h2>引言</h2>
+    <p>
+      <cite class="ref" data-key="vaswani2017attention">Transformer</cite> 的核心是
+      注意力权重矩阵 $A_{ij}$：它描述了第 $i$ 个位置在生成自己的表示时，对第 $j$ 个
+      位置分配了多少"注意力"。单看公式容易忽略一个直觉——$A$ 的每一行都是一个合法的
+      概率分布（非负、行和为 1），把它画成 3D 柱状图后，这一点会非常直观。
+    </p>
+  </section>
+
+  <section id="body">
+    <h2>正文：从公式到 3D 权重图</h2>
+    <p>
+      给定查询 $Q \in \mathbb{R}^{n \times d_k}$ 与键 $K \in \mathbb{R}^{n \times d_k}$，
+      注意力权重矩阵为
+    </p>
+    <p>
+      $$
+      A = \mathrm{softmax}\!\left(\frac{QK^\top}{\sqrt{d_k}}\right), \qquad
+      \sum_{j=1}^{n} A_{ij} = 1 \ \ \forall i
+      $$
+    </p>
+    <p>
+      下面用一个 $8 \times 8$ 的示例权重矩阵（合成数据，模拟"每个位置更关注自己附近
+      位置"的局部注意力模式）绘制成 3D 柱状图：横轴是 query 位置 $i$，纵深轴是 key
+      位置 $j$，柱子高度是 $A_{ij}$。可以拖拽旋转、滚轮缩放来观察每一行（固定 $i$）
+      的柱子高度总和是否总是差不多——这正对应"行和为 1"这条性质。
+    </p>
+
+    <div class="viz3d-container" id="attn-viz3d">
+      <span class="viz3d-hint">拖拽旋转 · 滚轮缩放</span>
+    </div>
+    <p class="viz3d-caption">
+      图：合成的 $8\times8$ 自注意力权重矩阵 $A_{ij}$ 的 3D 柱状图，颜色越亮表示权重越大。
+    </p>
+  </section>
+
+  <section id="conclusion">
+    <h2>小结</h2>
+    <p>
+      把注意力权重矩阵可视化成 3D 柱状图，可以直接"看到"两个关键性质：
+      (1) 每一行是一个概率分布（行和恒为 1）；
+      (2) 不同的注意力模式（局部/全局/稀疏等）会在这张图上呈现出明显不同的几何形状，
+      这也是后续大量高效注意力变体工作试图利用的结构先验。
+    </p>
+  </section>
+</main>
+
+<footer class="site-footer">
+  本页面由调研 Workspace 模板生成 · 数学公式由 KaTeX 渲染 · 3D 可视化由 three.js 渲染
+</footer>
+
+<script type="module" src="../../src/site.js"></script>
+
+<script type="module">
+  import * as THREE from "three";
+  import { createOrbitScene } from "../../src/viz/create-orbit-scene.js";
+
+  // 合成的 8x8 局部注意力权重矩阵：每行是一个以对角线为中心的高斯分布，
+  // 再归一化保证行和为 1（模拟"更关注自己附近位置"的局部注意力模式）。
+  function buildSyntheticAttention(n) {
+    var A = [];
+    for (var i = 0; i < n; i++) {
+      var row = [];
+      var sum = 0;
+      for (var j = 0; j < n; j++) {
+        var d = i - j;
+        var w = Math.exp(-(d * d) / (2 * 1.5 * 1.5));
+        row.push(w);
+        sum += w;
+      }
+      for (var k = 0; k < n; k++) row[k] /= sum;
+      A.push(row);
+    }
+    return A;
+  }
+
+  function colorForValue(v, vmax) {
+    // 简单的蓝->黄渐变，v 越大越亮
+    var t = Math.min(1, v / vmax);
+    var c = new THREE.Color();
+    c.setHSL(0.62 - 0.5 * t, 0.75, 0.35 + 0.4 * t);
+    return c;
+  }
+
+  function initScene() {
+    var container = document.getElementById("attn-viz3d");
+    if (!container) return;
+
+    var n = 8;
+    var A = buildSyntheticAttention(n);
+    var vmax = Math.max.apply(null, A.map(function (row) { return Math.max.apply(null, row); }));
+
+    var { scene, start } = createOrbitScene(container, {
+      cameraPosition: [7, 8, 11],
+      controlsTarget: [n / 2, 0, n / 2],
+    });
+
+    // 底部网格，标示 i/j 坐标平面
+    var grid = new THREE.GridHelper(n, n, 0x334155, 0x1e293b);
+    grid.position.set(n / 2 - 0.5, 0, n / 2 - 0.5);
+    scene.add(grid);
+
+    var maxHeight = 4;
+    var geometry = new THREE.BoxGeometry(0.8, 1, 0.8);
+    for (var i = 0; i < n; i++) {
+      for (var j = 0; j < n; j++) {
+        var v = A[i][j];
+        var h = Math.max(0.02, (v / vmax) * maxHeight);
+        var material = new THREE.MeshStandardMaterial({ color: colorForValue(v, vmax) });
+        var bar = new THREE.Mesh(geometry, material);
+        bar.scale.y = h;
+        bar.position.set(i, h / 2, j);
+        scene.add(bar);
+      }
+    }
+
+    start();
+  }
+
+  initScene();
+</script>
+</body>
+</html>
